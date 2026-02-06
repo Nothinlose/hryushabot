@@ -1,13 +1,15 @@
+import os
 import asyncio
 import re
 import random
+from dotenv import load_dotenv
 from datetime import datetime
 from telethon import TelegramClient, events
-
+load_dotenv()
 
 # настройки
-API_ID = сюда_айди_апки 
-API_HASH = 'хеш сюда'  
+API_ID = os.getenv("API_ID")
+API_HASH = os.getenv("API_HASH")
 SESSION_NAME = 'hryakobot'
 GAME_BOT_ID = 7553874114
 COMMAND_TEXT = "хрю"
@@ -100,11 +102,11 @@ async def main():
             match = re.search(r'«(.*?)»', text)
             if match:
                 card_name = match.group(1)
-            
+
             stats["cards"] += 1
             log(f"[ХРЯК НАЙДЕН!!] Получена карточка: {card_name} 🎉", "SUCCESS")
             log(f"Всего поймано хрюш за сессию: {stats['cards']}", "INFO")
-            
+
             # 4 часа таймер после найденного хряка
             asyncio.create_task(wait_and_send(DEFAULT_COOLDOWN, chat_id, client))
 
